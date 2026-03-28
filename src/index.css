@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Space Grotesk", sans-serif;
+  --font-body: "Manrope", sans-serif;
+  
+  --color-surface: #0c0e10;
+  --color-surface-container-low: #111416;
+  --color-surface-container-high: #1b2025;
+  --color-surface-container-highest: #20262c;
+  --color-primary: #b8c8df;
+  --color-primary-container: #39485b;
+  --color-on-surface: #e0e6ed;
+  --color-on-surface-variant: #a6acb2;
+  --color-outline-variant: #42494e;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-surface;
+    background-color: #0c0e10;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10;
+  }
+  
+  .scene {
+    width: 200px;
+    height: 200px;
+    perspective: 1000px;
+    position: relative;
+  }
+
+  .cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateCube 20s infinite linear;
+  }
+
+  .cube-face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: rgba(184, 200, 223, 0.03);
+    border: 1.5px solid rgba(184, 200, 223, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    box-shadow: inset 0 0 15px rgba(184, 200, 223, 0.1);
+  }
+
+  .front  { transform: rotateY(  0deg) translateZ(100px); }
+  .back   { transform: rotateY(180deg) translateZ(100px); }
+  .right  { transform: rotateY( 90deg) translateZ(100px); }
+  .left   { transform: rotateY(-90deg) translateZ(100px); }
+  .top    { transform: rotateX( 90deg) translateZ(100px); }
+  .bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+  @keyframes rotateCube {
+    from { transform: rotateX(0deg) rotateY(0deg); }
+    to { transform: rotateX(360deg) rotateY(360deg); }
+  }
+
+  .asymmetric-blur {
+    @apply absolute blur-[80px] -z-10 opacity-15 rounded-full;
+  }
+}
